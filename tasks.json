@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build and run fhir_upload",
+      "type": "shell",
+      "command": "gcc",
+      "args": [
+        "-I", "C:/curl-8.16.0_14-win64-mingw/include",
+        "-L", "C:/curl-8.16.0_14-win64-mingw/lib",
+        "fhir_upload_temperature.cpp",
+        "-o", "fhir_upload_temperature.exe",
+        "-lcurl.dll",
+        "-lws2_32",
+        "-lwldap32",
+        "-lcrypt32"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "run fhir_upload",
+      "type": "shell",
+      "command": "${workspaceFolder}/fhir_upload_temperature.exe",
+      "args": ["${input:temperature}"],
+      "dependsOn": ["build and run fhir_upload"],
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "temperature",
+      "type": "promptString",
+      "description": "請輸入體溫 (例如: 36.5)",
+      "default": "37.0"
+    }
+  ]
+}
